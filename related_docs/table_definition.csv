@@ -1,0 +1,47 @@
+﻿id,Table,Column,Data Type,Regulation,Default Value,Foreign Key,Description
+TAB-001,users,id,uuid,PRIMARY KEY,gen_random_uuid(),,ユーザーの一意識別子
+TAB-002,users,email,text,UNIQUE NOT NULL,,,ユーザーのメールアドレス
+TAB-003,users,password,text,NOT NULL,,,ユーザーのハッシュ化されたパスワード
+TAB-004,users,user_type,text,NOT NULL,,,ユーザータイプ（顧客 or 事業者）
+TAB-005,users,created_at,timestamp with time zone,NOT NULL,now(),,ユーザー作成日時
+TAB-006,customer_profiles,id,uuid,PRIMARY KEY,gen_random_uuid(),,顧客プロフィールの一意識別子
+TAB-007,customer_profiles,user_id,uuid,NOT NULL,,users.id,関連するユーザーID
+TAB-008,customer_profiles,name,text,NOT NULL,,,顧客の氏名
+TAB-009,customer_profiles,contact,text,,,,顧客の連絡先
+TAB-010,customer_profiles,needs,jsonb,,'{}'::jsonb,,顧客のニーズ詳細（業種・地域・予算など）
+TAB-011,business_profiles,id,uuid,PRIMARY KEY,gen_random_uuid(),,事業者プロフィールの一意識別子
+TAB-012,business_profiles,user_id,uuid,NOT NULL,,users.id,関連するユーザーID
+TAB-013,business_profiles,company_name,text,NOT NULL,,,事業者の会社名
+TAB-014,business_profiles,services,jsonb,,'{}'::jsonb,,提供サービスの詳細
+TAB-015,business_profiles,service_areas,text[],,'{}',,対応可能地域
+TAB-016,matches,id,uuid,PRIMARY KEY,gen_random_uuid(),,マッチングの一意識別子
+TAB-017,matches,customer_id,uuid,NOT NULL,,customer_profiles.id,マッチングした顧客ID
+TAB-018,matches,business_id,uuid,NOT NULL,,business_profiles.id,マッチングした事業者ID
+TAB-019,matches,status,text,NOT NULL,'pending',,マッチングのステータス
+TAB-020,matches,created_at,timestamp with time zone,NOT NULL,now(),,マッチング作成日時
+TAB-021,messages,id,uuid,PRIMARY KEY,gen_random_uuid(),,メッセージの一意識別子
+TAB-022,messages,match_id,uuid,NOT NULL,,matches.id,関連するマッチングID
+TAB-023,messages,sender_id,uuid,NOT NULL,,users.id,送信者のユーザーID
+TAB-024,messages,content,text,NOT NULL,,,メッセージ内容
+TAB-025,messages,created_at,timestamp with time zone,NOT NULL,now(),,メッセージ作成日時
+TAB-026,transactions,id,uuid,PRIMARY KEY,gen_random_uuid(),,取引の一意識別子
+TAB-027,transactions,match_id,uuid,NOT NULL,,matches.id,関連するマッチングID
+TAB-028,transactions,amount,numeric,NOT NULL,,,取引金額
+TAB-029,transactions,status,text,NOT NULL,'pending',,取引のステータス
+TAB-030,transactions,created_at,timestamp with time zone,NOT NULL,now(),,取引作成日時
+TAB-031,reviews,id,uuid,PRIMARY KEY,gen_random_uuid(),,レビューの一意識別子
+TAB-032,reviews,transaction_id,uuid,NOT NULL,,transactions.id,関連する取引ID
+TAB-033,reviews,reviewer_id,uuid,NOT NULL,,users.id,レビュー投稿者のユーザーID
+TAB-034,reviews,rating,integer,NOT NULL,,,評価点数
+TAB-035,reviews,content,text,,,,レビュー内容
+TAB-036,reviews,created_at,timestamp with time zone,NOT NULL,now(),,レビュー作成日時
+TAB-037,favorites,id,uuid,PRIMARY KEY,gen_random_uuid(),,お気に入りの一意識別子
+TAB-038,favorites,customer_id,uuid,NOT NULL,,customer_profiles.id,お気に入りを登録した顧客ID
+TAB-039,favorites,business_id,uuid,NOT NULL,,business_profiles.id,お気に入りに登録された事業者ID
+TAB-040,favorites,created_at,timestamp with time zone,NOT NULL,now(),,お気に入り登録日時
+TAB-041,support_tickets,id,uuid,PRIMARY KEY,gen_random_uuid(),,サポートチケットの一意識別子
+TAB-042,support_tickets,user_id,uuid,NOT NULL,,users.id,チケット作成者のユーザーID
+TAB-043,support_tickets,subject,text,NOT NULL,,,問い合わせ件名
+TAB-044,support_tickets,content,text,NOT NULL,,,問い合わせ内容
+TAB-045,support_tickets,status,text,NOT NULL,'open',,チケットのステータス
+TAB-046,support_tickets,created_at,timestamp with time zone,NOT NULL,now(),,チケット作成日時

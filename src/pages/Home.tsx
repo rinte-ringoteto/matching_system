@@ -30,7 +30,7 @@ const Home: React.FC = () => {
         setUser(data);
       }
     } else {
-      router.push('/Login');
+      // router.push('/Login');
     }
   };
 
@@ -48,9 +48,9 @@ const Home: React.FC = () => {
     }
   };
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  // if (!user) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className="min-h-screen h-full bg-gray-100">
@@ -67,8 +67,8 @@ const Home: React.FC = () => {
                   className="w-20 h-20 rounded-full mr-4"
                 />
                 <div>
-                  <h3 className="text-xl font-semibold">{user.customer_profiles?.name || 'ゲスト'}</h3>
-                  <p className="text-gray-600">{user.email}</p>
+                  <h3 className="text-xl font-semibold">{user?.customer_profiles?.name || 'ゲスト'}</h3>
+                  <p className="text-gray-600">{user?.email}</p>
                 </div>
               </div>
               <Link href="/ProfileEdit" className="text-blue-600 hover:underline">

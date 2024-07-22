@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FaUsers, FaExchangeAlt, FaChartLine, FaLink } from 'react-icons/fa';
 import { supabase } from '@/supabase';
-import { Topbar } from '@/components/Topbar';
+import Topbar from '@/components/Topbar';
 
 const AdminDashboard: React.FC = () => {
   const router = useRouter();
